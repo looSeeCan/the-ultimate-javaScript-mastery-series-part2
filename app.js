@@ -1,29 +1,8 @@
 //key: ///ALL CAPS = name of the lesson, ///Name of the parts of the lesson, //regular comments
-document.title = "The Ultimate JavaScript Mastery Series";
 
-// const div = document.createElement("div");
-// div.id = 'parentDiv';
-// const h1 = document.createElement("h1");
-// h1.innerHTML = "The Ultimate JavaScript Mastery Series Part2";
-// div.appendChild(h1);
-// document.body.prepend(div);
-
-function Html () {
-    this.append = function(id, text) {
-        this.div =  document.createElement("div");
-        this.div.id = id;
-        this.h1 = document.createElement("h1");
-        this.h1.innerHTML = text;
-        this.div.appendChild(this.h1);
-        document.body.prepend(this.div);
-    };
-};
-const appendDiv2 = new Html();
-appendDiv2.append("test", "This is a test");
-
-const appendDiv = new Html(); 
-appendDiv.append("parentDiv", "The Ultimate JavaScript Mastery Series Part2");
-
+// import { Html } from "./src/html.js";//I have an issue with debugging when I use "document.getElementbyId". Referencerror: document is not defined
+//I couldnt figure out how to fix it. something about the dom and node. This is just a constructor that I was practicing with to create the title on the page
+//When I need to debug, I just comment this out, so I do not get the error.
 
 
 
@@ -222,9 +201,59 @@ console.log(circle.radius, circle.location, circle.draw());
         console.log(circle);
     })();
 
-///9. Enumerating Properties    
+///9. Enumerating Properties
+    //sometime you need to iterate over, or enumerte prperties in an object
+    (() => {
+        function Circle (radius) {
+            this.radius = radius;
+            this.draw = function () {
+                console.log("draw");
+            };
+        };
+
+        const circle = new Circle(10);
+        console.log(circle);
+
+        for (let key in circle) {//the for in loop iterates or enumerates over the propeerties in an object. key = "key" in "key: value" pair
+            if (typeof circle[key] !== "function")//if the typeof key is not a function. 
+            console.log(key, circle[key]);//logs the key. circle[key] logs the value. remember the rules of bracket notation
+            //in this case, does not log the function(s)
+        };
+
+        const keys = Object.keys(circle);//return all the keys in the circle as an array
+        console.log(keys);
+
+        if ("radius" in circle) {//if the property radius is in circle. Checks to see if there is a property or method in the object
+            console.log("circle has a radius property");
+        }
+
+    })();
 
 
+//10. Abstraction
+    (() => {
+        
+    })();
+
+
+    (() => {
+        
+    })();
+    (() => {
+        
+    })();
+    (() => {
+        
+    })();
+    (() => {
+        
+    })();
+    (() => {
+        
+    })();
+    (() => {
+        
+    })();
 
 
 
