@@ -18,14 +18,24 @@ function Html () {
         document.body.prepend(this.div);
     };
 };
-const appendDiv2 = new Html();
-appendDiv2.append("test", "This is a test");
 
-const appendDiv = new Html(); 
-appendDiv.append("parentDiv", "The Ultimate JavaScript Mastery Series Part2");
+// const appendDiv3 = new HTml();
+
+//TODO: implement abstraction on this object
+
+function Html1 () {
+    this.append = function(id, text) {
+        let div = document.createElement("div");
+        div.id = id;
+        const h1 = document.createElement("h1");
+        h1.innerHTML = text;
+        div.appendChild(h1);
+        document.body.prepend(div);
+    };
+};
+
+const appendDiv4 = new Html1();
 
 
 
-
-
-export {title, Html};
+export {title, Html, Html1};

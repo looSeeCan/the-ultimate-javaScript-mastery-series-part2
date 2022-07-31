@@ -1,10 +1,18 @@
 //key: ///ALL CAPS = name of the lesson, ///Name of the parts of the lesson, //regular comments
 
-// import { Html } from "./src/html.js";//I have an issue with debugging when I use "document.getElementbyId". Referencerror: document is not defined
+import { Html, Html1 } from "./src/html.js";//I have an issue with debugging when I use "document.getElementbyId". Referencerror: document is not defined
 //I couldnt figure out how to fix it. something about the dom and node. This is just a constructor that I was practicing with to create the title on the page
-//When I need to debug, I just comment this out, so I do not get the error.
+
+const appendDiv2 = new Html1();
+appendDiv2.append("div2", "Abstracted version of the Html object");
+console.log(appendDiv2);
+
+const appendDiv = new Html();//the objec is prepending the div. so the every time i call this append method. it will be appended to the top of the page.
+appendDiv.append("parentDiv", "The Ultimate JavaScript Mastery Series Part2");
+console.log(appendDiv);
 
 
+//When I need to debug, I just comment the above out, so I do not get the error.
 
 ///OBJECTS
 
@@ -230,27 +238,111 @@ console.log(circle.radius, circle.location, circle.draw());
     })();
 
 
-//10. Abstraction
+///10. Abstraction
+    //remember tthe abstraction principle of object-oriented programming. Hide the details and expose only the essentials.
     (() => {
         
     })();
 
+///11. Private Properties and Methods
+    //How do we implement abstraction. Compare this object with the one below
+    (() => {
+        function Circle(radius) {
+            this.radius = radius;
+            this.defaultLocation = { x: 0, y: 0 };
+            
+            this.computeOptimumLocation = function (factor) {
+                console.log(factor);
+            };
+
+            this.draw = function() {
+                this.computeOptimumLocation(.01);
+                console.log('draw');
+            };
+        };
+
+        const circle = new Circle(10);
+        console.log(circle);
+        circle.computeOptimumLocation();//all these members are available. we need to abstract some. check below.
+        console.log(circle.defaultLocation);
+        circle.draw();
+        console.log(circle.radius);
+    })();
+        
+    //implement abstraction to the above object
+    (() => {
+        function Circle(radius) {
+            this.radius = radius;
+            let defaultLocation = { x: 0,  y: 0 };//instead of setting it as a property on our new object, we define it as a local/private variable here
+
+            let computeOptimumLocation = function(factor) {//same with the function
+                console.log(factor);
+                // return factor;
+            };
+
+            this.draw = function() {
+                computeOptimumLocation(.01);//this function here will no longer be on our new object, because we declared it as a private variable. we no lognger
+                //need to access it using "this". We just access it directly here. This will work because in Js we have this concept of closure. We have this draw function
+                //tha is nested inside the Circle function. 
+
+                // let x, y;//If we declare variables inside the draw function, those variables scope is limeted to the draw function. x and y will go out of scope as soon
+                //as the function is finished executing. Closure allows a function to access any local variables it has itself, like x and y and any variables its parent
+                //function has. So, "defaultLocation and computeOptimumLocation" would be with in the closure of the draw function.
+                console.log("draw");
+                // return 'draw';
+            };
+            
+        };
+
+        const circle = new Circle(10);
+        console.log(circle);
+
+        circle.draw();//now that we have implemented abstraction. "draw and radius" are the only memebers that you see. The public interface of this objec tis simpler
+        //its easier to work with and this will also prevent issues later down the road.
+        console.log(circle.radius);
+    })();
+
+///12. Getters and Setters
+    (() => {
+        function Circle(radius) {
+            this.radius = radius;
+
+            let defaultLocation = { x: 0, y: 0 };//we want to have access to this value. It is a local/private variable and we want to have access to it outside of this
+            //function. We will use getters and setters
+
+            this.draw = function() {
+                console.log("draw");
+            };
+            //the first argument in the Object method, "this", is the object we want. "defaultLocation" is the name our property that we want.
+            //the third argument is an object with a key: value pair.
+            Object.defineProperty(this, "defaultLocation", {
+                get: function() {//Key: Value = get: function. The getter is a read only property. So a getter is a function that is used to read a property
+                    return defaultLocation;
+                },
+                set: function (value) {//now if we want to manipulate/change the value of the property, we use a setter
+                    console.log(value);
+                    // defaultLocation = value
+                }
+            });
+        };
+        
+        const circle = new Circle(10);
+        circle.draw();
+        console.log(circle);
+        console.log(circle.defaultLocation);//we can now access (read only with get) the defaultLocation property
+        circle.defaultLocation = {x: 1, y: 1};//when I set it here, this triggers the set function. the value here that I changed it to is passed to the value in the
+        //set function.
+        
+    })();
+        
+    (() => {
+        
+    })();
 
     (() => {
         
     })();
-    (() => {
-        
-    })();
-    (() => {
-        
-    })();
-    (() => {
-        
-    })();
-    (() => {
-        
-    })();
+
     (() => {
         
     })();
