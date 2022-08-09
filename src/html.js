@@ -21,7 +21,7 @@ function Html () {
 
 // const appendDiv3 = new HTml();
 
-//TODO: implement abstraction on this object
+//implement abstraction on the above object
 
 function Html1 () {
     this.append = function(id, text) {

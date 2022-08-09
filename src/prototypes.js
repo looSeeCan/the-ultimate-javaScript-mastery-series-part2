@@ -146,20 +146,71 @@ const prototypes = () => {
         function Circle(radius) {
             this.radius = radius;
 
-            this.move = function() {
+            this.move = function() {//we have two instance members here
                 console.log('move')
             };
         };
+        
+        const circle1 = new Circle(1);//declaring the object first and then modifying the prototype below
+        console.log(circle1);
 
-        Circle.prototype.draw = function draw() {
+        Circle.prototype.draw = function draw() {//we have one prototype member here.
+            //it does not matter when you change the prototype. we could declare the new object first and then modify the prototype. The draw method will still be available
             console.log('draw');
+            // return "draw";
         };
 
-        const circle1 = new Circle;
-    })();
-
-    (() => {
+        circle1.draw();//the draw method will still be available;
         
+        console.log(Object.keys(circle1));//only returns instance members
+
+        for(let keys in circle1) {//returns all memebers (instance and prototype)
+            console.log(keys);
+        };
+
+        console.log(circle1.hasOwnProperty("radius"));//.hasOwnProperty is refering to the instance members. this returns true, because "radius" is an instance member
+        console.log(circle1.hasOwnProperty("draw"));//returns false because "draw" is a prototype property
+
+    })();
+        
+    (() => {
+        function StopWatch() {
+            let startTime, endTime, running, duration = 0;
+            
+            
+            this.stop = function() {
+                if(!running) throw new Error("Stopwatch is not started");
+
+                running = false;
+                endTime = new Date();
+                // console.log(endTime);
+
+                const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
+                duration += seconds;
+                console.log(seconds);
+                console.log(duration);
+            };
+
+            this.reset = function() {
+                startTime = null;
+                endTime = null;
+                running = false;
+                duration = 0;
+            };
+        };
+        
+        StopWatch.prototype.start = function start () {
+            if(running) throw new Error("StopWatch has already started");
+            
+            running = true;
+            startTime = new Date();
+            console.log(startTime);
+        };
+
+
+        const go = new StopWatch();
+        go.start();
+        go.stop();
     })();
 
     (() => {

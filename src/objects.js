@@ -1,6 +1,5 @@
 
 
-
 ///OBJECTS
 const objects = () => {
     ///2. Object literal syntax
