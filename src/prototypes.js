@@ -176,39 +176,77 @@ const prototypes = () => {
     (() => {
         function StopWatch() {
             let startTime, endTime, running, duration = 0;
+
+            //I want access to the variables that I declared above. I can not access them from the prototype functions below
+            Object.defineProperty(this, "duration", {
+                get: function() {
+                    return duration;
+                },
+                set: function (value) {
+                    duration = value;
+                }
+            });
+
+            Object.defineProperty(this, 'startTime', {
+                get: function() {
+                    return startTime;
+                },
+                set: function (value) {
+                    startTime = value;
+                }
+            });
+
+            Object.defineProperty(this, "endTime",  {
+                get: function() {
+                    return endTime;
+                },
+                set: function (value) {
+                    endTime = value;
+                }
+            });
+
+            Object.defineProperty(this, "running", {
+                get: function() {
+                    return running; 
+                },
+                set: function(value) {
+                    running = value;
+                }
+            });
+        };
+
+        StopWatch.prototype.start = function start () {
+            if(this.running) throw new Error("StopWatch has already started");
             
-            
-            this.stop = function() {
-                if(!running) throw new Error("Stopwatch is not started");
-
-                running = false;
-                endTime = new Date();
-                // console.log(endTime);
-
-                const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
-                duration += seconds;
-                console.log(seconds);
-                console.log(duration);
-            };
-
-            this.reset = function() {
-                startTime = null;
-                endTime = null;
-                running = false;
-                duration = 0;
-            };
+            this.running = true;
+            this.startTime = new Date();
+            console.log(this.startTime);
         };
         
-        StopWatch.prototype.start = function start () {
-            if(running) throw new Error("StopWatch has already started");
-            
-            running = true;
-            startTime = new Date();
-            console.log(startTime);
+        StopWatch.prototype.stop = function() {
+            if(!this.running) throw new Error("Stopwatch is not started");
+
+            this.running = false;
+            this.endTime = new Date();
+            // console.log(this.endTime);
+
+            const seconds = (this.endTime.getTime() - this.startTime.getTime()) / 1000;
+            this.duration += seconds;
+            console.log(seconds);
+            console.log(this.duration);
         };
 
-
+        StopWatch.prototype.reset = function() {
+            this.startTime = null;
+            this.endTime = null;
+            this.running = false;
+            this.duration = 0;
+        };
+        
+        
         const go = new StopWatch();
+        console.log(go);
+        // console.log(go.this.duration);
         go.start();
         go.stop();
     })();

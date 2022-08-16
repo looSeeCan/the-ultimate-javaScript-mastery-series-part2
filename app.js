@@ -2,6 +2,8 @@
 import { Html, Html1 } from "./src/html.js";//I have an issue with debugging when I use "document.getElementbyId". Referencerror: document is not defined
 import { objects } from "./src/objects.js";
 import { prototypes } from "./src/prototypes.js";
+import { prototypicalInheritance } from "./src/prototypical_inheritance.js";
+
 //I couldnt figure out how to fix it. something about the dom and node. This is just a constructor that I was practicing with to create the title on the page
 
 const appendDiv2 = new Html1();
@@ -20,10 +22,14 @@ console.groupCollapsed("%cObjects", "font-size: 20px");
     console.log(a);
 console.groupEnd("Objects");
 
-console.group("%cPrototypes", "font-size: 20px");
+console.groupCollapsed("%cPrototypes", "font-size: 20px");
     const b = prototypes();
     console.log(b);
 console.groupEnd("%cPrototypes");
 
+console.group("%cPrototypical Inheritance", "font-size: 20px");
+    const c = prototypicalInheritance();
+
+console.groupEnd();
 
 

@@ -355,6 +355,12 @@ const objects = () => {
                     running = false;
                     duration = 0;
                 };
+
+                Object.defineProperty(this, "duration", {//a read only property called duration
+                    get: function() {
+                        return duration;
+                    }
+                });
             };
             
             const go = new StopWatch();

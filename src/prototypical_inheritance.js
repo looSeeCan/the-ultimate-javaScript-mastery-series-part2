@@ -1,0 +1,8 @@
+
+
+const prototypicalInheritance = () => {
+    
+};
+
+
+export {prototypicalInheritance};
