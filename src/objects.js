@@ -5,7 +5,7 @@ const objects = () => {
     ///2. Object literal syntax
         //a simple way to defihe objects
     (() => {
-        // debugger;
+        debugger;
         const circle = {
             radius: 1,//key : value, here the key is radius. the value is 1
             location: {//here the key is location and the value is an object
