@@ -36,3 +36,5 @@ console.groupEnd();
 ///ok so the comment^ showed up on this laptop when I did the git pull. This is the collaborator laptop. I don't see the changes
     /// when I do the pull on the owner machine. I had gitlens installed on the owner machine. I disabled it, so I'm going to try again
     /// with this statement.
+
+///this is a change from the main branch.
