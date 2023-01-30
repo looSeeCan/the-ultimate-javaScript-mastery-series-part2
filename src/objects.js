@@ -5,7 +5,7 @@ const objects = () => {
     ///2. Object literal syntax
         //a simple way to defihe objects
     (() => {
-        debugger;
+        // debugger;
         const circle = {
             radius: 1,//key : value, here the key is radius. the value is 1
             location: {//here the key is location and the value is an object
@@ -18,8 +18,8 @@ const objects = () => {
                 return "draw";
             }
         };
-        
-        console.log(circle.radius, circle.location, circle.draw());
+        console.log(circle.draw());
+        // console.log(circle.radius, circle.location, circle.draw());
     })();
     
     //the object above has 3 members: radius, location and draw. draw is a method. radius and location are properties. Properties are used to hold values. Methods are used
@@ -102,7 +102,7 @@ const objects = () => {
                 
             };
             //log the function to see that it is also a function
-            console.log(Circle.name);//if we use dot notation, we can see all the members of the object. the purple icons are meethods and the blue icons are properties
+            console.log(Circle);//if we use dot notation, we can see all the members of the object. the purple icons are meethods and the blue icons are properties
             console.log(Circle.length);//logs the amount of arguments. in this case, just 1, which is "radius".
             
     
@@ -362,7 +362,7 @@ const objects = () => {
                     }
                 });
             };
-            
+            debugger;
             const go = new StopWatch();
             go.start();
             go.stop();
