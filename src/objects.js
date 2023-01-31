@@ -362,7 +362,7 @@ const objects = () => {
                     }
                 });
             };
-            debugger;
+            // debugger;
             const go = new StopWatch();
             go.start();
             go.stop();
