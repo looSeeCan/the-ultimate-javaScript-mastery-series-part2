@@ -22,7 +22,7 @@ console.groupCollapsed("%cObjects", "font-size: 20px");
     console.log(a);
 console.groupEnd("Objects");
 
-console.groupCollapsed("%cPrototypes", "font-size: 20px");
+console.group("%cPrototypes", "font-size: 20px");
     const b = prototypes();
     console.log(b);
 console.groupEnd("%cPrototypes");
@@ -32,9 +32,3 @@ console.group("%cPrototypical Inheritance", "font-size: 20px");
 
 console.groupEnd();
 
-/// this is a test for merging and pulling
-///ok so the comment^ showed up on this laptop when I did the git pull. This is the collaborator laptop. I don't see the changes
-    /// when I do the pull on the owner machine. I had gitlens installed on the owner machine. I disabled it, so I'm going to try again
-    /// with this statement.
-
-///this is a change from the main branch.
