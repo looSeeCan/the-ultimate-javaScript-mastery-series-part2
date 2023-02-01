@@ -323,7 +323,7 @@ const objects = () => {
             //set function.
         })();
         
-    ///14. Exercise Stopwatch //TODO:
+        ///14. Exercise Stopwatch //TODO:
         (() => {//I didnt spend to much time on this. I will come back to connect it to a button and to the dom to see it in real time.
             function StopWatch() {
                 let startTime, endTime, running, duration = 0;

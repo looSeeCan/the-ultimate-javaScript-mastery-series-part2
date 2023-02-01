@@ -11,6 +11,10 @@ const prototypes = () => {
 
     ///3. Multilevel Inheritance
         //Objects created by a given constructor will have the same protoype
+    (() => {
+        const myArray = [1, 2, 3, 4];
+        console.log(myArray);
+    })();
 
     ///4. Property Descriptors
     (() => {
@@ -28,104 +32,57 @@ const prototypes = () => {
         
     })();
 
-    (() => {
-        //lets look at at the property descriptor of the toString method in the same person object
-        // let person = {name: "Lucycan"};
-        // console.log(person);
-        // let parentObject = Object.getPrototypeOf(person);
-        // console.log(parentObject);
-        // console.log(Object.getPrototypeOf(parentObject));
-        // console.log(console);
-        // console.log(Object.getPrototypeOf(console));
-
-        function BankAccount(balance) {
-            let _balance = balance;
-            Object.defineProperty(this, "balance", {
-                get: function() {
-                    return _balance;
-                },
-                set: function(amount) {
-                    _balance = amount;
-                },
-                enumerable: true,
-                configurable: false
-            });
-        }
         
-        console.log(BankAccount);
-        console.log(Object.getPrototypeOf(BankAccount));
-        
-        const transaction = new BankAccount(12);
-        console.log(transaction);
-
-        // const descriptor = Object.getOwnPropertyDescriptor(parentObject, "valueOf");//im looking at the parent object here. it gives me undefined if I look at the "person" object. idk why
-        
-        // console.log("valueOf:", descriptor);
-
-        // Object.defineProperty(person, "name", {
-        //     writable: true,
-        //     enumerable: true,
-        //     configurable: true,//these attributes are true by default
-        // });
-        // console.log(descriptor);
-        // person.name = "Sheng";//change the name
-        // console.log("check to see if the name changed:", person.name);
-        // // delete person.name;
-        // console.log(person.name);
-        // console.log(person);
-
-        // Object.defineProperty(person, "toString", {
-        //     enumerable: true,
-        // });
-
-        // for(let key in person) {
-        //     console.log(key);
-        // };
-    })();
 
 //     ///5. Constructor Prototypes
 //     (() => {
         
 //     })();
 
-//     ///6. Prototype vs Instance Members
-//     (() => {
-//         function Circle(radius) {
-//             this.radius = radius;
+    ///6. Prototype vs Instance Members
+    (() => {
+        function Circle(radius) {
+            this.radius = radius;
 
-//             this.draw = function() {//so the way we have this implemented here. we just have 2 instances below, but if we have 1000 or so instancesm, we have 1000 draw
-//                 //methods. That is alot of wasted memory. we need to make a single instance of this method.
-//                 console.log("draw");
-//             };
-//         };
-//         const circle1 = new Circle(1);
-//         console.log(circle1);
-//         const circle2 = new Circle(1);
-//         console.log(circle2);
-//         console.log("Circle constructor function:", Circle.prototype);
-//     })();
+            this.draw = function() {//so the way we have this implemented here. we just have 2 instances below, but if we have 1000 or so instancesm, we have 1000 draw
+                //methods. That is alot of wasted memory. we need to make a single instance of this method.
+                console.log("draw");
+            };
+        };
+
+        console.log(Circle);
+        const circle1 = new Circle(1);
+        console.log("circle1:",circle1);
+        const circle2 = new Circle(2);
+        console.log("circle2:", circle2);
+        console.log("Circle constructor function:", Circle.prototype);
+        console.log(circle1.__proto__);
+        console.log(circle1.__proto__ === Circle.prototype);
+        console.log(circle1.__proto__ === circle2.__proto__);
+    })();
     
-//     (() => {
-//         function Circle(radius) {
-//             this.radius = radius;
+    (() => {
+        function Circle(radius) {
+            this.radius = radius;
             
-//         };
+        };
         
-//         //every constructor has a protoype property. it is === to the circle objects that we create from that constructor
-//         Circle.prototype.draw = function() {//what we did here, is take the "this.draw" method and placed it in its prototype object 
-//             console.log("draw");
-//         };
+        //every constructor has a protoype property. it is === to the circle objects that we create from that constructor
+        Circle.prototype.draw = function() {//what we did here, is take the "this.draw" method and placed it in its prototype object 
+            console.log("draw");
+        };
         
-//         const circle1 = new Circle(1);
-//         console.log(circle1);
-//         const circle2 = new Circle(1);
-//         console.log(circle2);//now we can see in the console that the draw method is no longer copied in each and every one of the instances. instead it is just in the
-//         console.log("Circle constructor function:", Circle.prototype);//prototype.
-//         console.log(Circle.prototype === circle1.__proto__);//compare the properties.
-//         //we can access it from everyone of our circle instances
-//         circle1.draw();//this draw will log on the console from line 89
-//         circle2.draw();//^
-//     })();
+        console.log(Circle);
+        const circle1 = new Circle(1);
+        console.log(circle1);
+        const circle2 = new Circle(2);
+        console.log(circle2);//now we can see in the console that the draw method is no longer copied in each and every one of the instances. instead it is just in the
+        console.log("Circle constructor function:", Circle.prototype);//prototype.
+        console.log(Circle.prototype === circle1.__proto__);//compare the properties.
+        //we can access it from everyone of our circle instances
+        circle1.draw();//this draw will log on the console from line 89
+        circle2.draw();//^
+    })();
     
 //     (() => {
 //         function Circle(radius) {
