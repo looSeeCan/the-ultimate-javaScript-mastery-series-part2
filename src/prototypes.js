@@ -41,13 +41,18 @@ const prototypes = () => {
 
     ///6. Prototype vs Instance Members
     (() => {
-        function Circle(radius) {
+        function Circle(radius, name) {
             this.radius = radius;
+            this.name = name;
 
             this.draw = function() {//so the way we have this implemented here. we just have 2 instances below, but if we have 1000 or so instancesm, we have 1000 draw
                 //methods. That is alot of wasted memory. we need to make a single instance of this method.
                 console.log("draw");
             };
+
+            this.walk = function() {
+                console.log("walk")
+            }
         };
 
         console.log(Circle);
@@ -55,10 +60,10 @@ const prototypes = () => {
         console.log("circle1:",circle1);
         const circle2 = new Circle(2);
         console.log("circle2:", circle2);
-        console.log("Circle constructor function:", Circle.prototype);
+        console.log("Circle.prototye:", Circle.prototype);
         console.log(circle1.__proto__);
         console.log(circle1.__proto__ === Circle.prototype);
-        console.log(circle1.__proto__ === circle2.__proto__);
+        console.log(circle1.__proto__ === circle2.__proto__);/// both these circles have the same prototype as Circle.prototype
     })();
     
     (() => {
@@ -77,7 +82,7 @@ const prototypes = () => {
         console.log(circle1);
         const circle2 = new Circle(2);
         console.log(circle2);//now we can see in the console that the draw method is no longer copied in each and every one of the instances. instead it is just in the
-        console.log("Circle constructor function:", Circle.prototype);//prototype.
+        console.log("Circle.protype", Circle.prototype);//prototype.
         console.log(Circle.prototype === circle1.__proto__);//compare the properties.
         //we can access it from everyone of our circle instances
         circle1.draw();//this draw will log on the console from line 89
