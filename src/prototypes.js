@@ -39,7 +39,50 @@ const prototypes = () => {
         
 //     })();
 
-    ///6. Prototype vs Instance Members
+    
+    /// 6. Prototype vs Instance Members
+
+    (() => {
+        function Circle(radius) {
+            //we have two kinds of properties and methods or two kinds of memebers
+            this.radius = radius; //instance members
+        };
+
+        Circle.prototype.draw = function() {//prototype members
+            console.log("draw");
+        };
+        
+        const circle1 = new Circle(1);
+        console.log(circle1.toString());//chech the .toString of the circle object
+        
+        console.log(".toString:", Circle.prototype.toString());//check the .toString method of the parent object
+
+        Circle.prototype.toString = function() {//assign a different vaule to the .toString method
+            return `Circle with radius ${this.radius}`;
+        };
+
+        console.log(".toString:", Circle.prototype.toString());//after assignment
+        console.log(circle1.toString());
+    })();
+
+    (() => {
+        function Circle(radius) {
+            this.radius = radius;
+
+            this.move = function() {
+                console.log("move");
+            };
+        };
+
+        Circle.prototype.draw = function draw() {
+            console.log("draw");
+            this.move();//this method is an instance memeber. We can reference in both directions. 
+        };
+
+        const circle1 = new Circle(1);
+        circle1.draw();
+    })();
+
     (() => {
         function Circle(radius, name) {
             this.radius = radius;
@@ -68,141 +111,125 @@ const prototypes = () => {
     
     (() => {
         function Circle(radius) {
-            this.radius = radius;
-            
+            this.radius = radius; /// instance memebers
+            this.anotherMember = function() {
+                console.log("anotherMember");
+            }
         };
         
         //every constructor has a protoype property. it is === to the circle objects that we create from that constructor
-        Circle.prototype.draw = function() {//what we did here, is take the "this.draw" method and placed it in its prototype object 
-            console.log("draw");
-        };
-        
-        console.log(Circle);
-        const circle1 = new Circle(1);
+            Circle.prototype.draw = function() {//what we did here, is take the "this.draw" method and placed it in its prototype object 
+                console.log("draw");
+            };
+            Circle.prototype.walk = "walk";
+            Circle.prototype.talk = function() {/// adding members to the prototype. Prototype members
+                return "Say something"; 
+            };
+            
+            console.log(Circle);
+            console.log(Circle.prototype);
+            console.log(Circle.constructor);
+            console.log(Object.getPrototypeOf(Circle));
+            const circle1 = new Circle(1);
+            console.log("circle1:", circle1);
+
+        /// can I add memebers to the Function.prototype and Object.prototype
+        Function.prototype.hello = "Hello Function.prototype";
+        Object.prototype.hello = "Hello Object.prototype";
+
+        /// you can refernce other membbers
+        Circle.prototype.referenceAnotherMember = function() { /// created a prototype called referencdAnotherMember in the Circle.prototype
+                                                                ///and referenced the instance member in circle1
+            circle1.anotherMember();
+        }
+        Circle.prototype.referenceAnotherMember();
+
+        /// lets reverse ^
+        circle1.anotherMember2 = function() {
+            Circle.prototype.referenceAnotherMember()
+        }
         console.log(circle1);
-        const circle2 = new Circle(2);
-        console.log(circle2);//now we can see in the console that the draw method is no longer copied in each and every one of the instances. instead it is just in the
-        console.log("Circle.protype", Circle.prototype);//prototype.
-        console.log(Circle.prototype === circle1.__proto__);//compare the properties.
-        //we can access it from everyone of our circle instances
-        circle1.draw();//this draw will log on the console from line 89
-        circle2.draw();//^
+        circle1.anotherMember2(); /// what I did here was I created anotherMember2 in circle1, then I called the method in the prototype
+
     })();
-    
-//     (() => {
-//         function Circle(radius) {
-//             //we have two kinds of properties and methods or two kinds of memebers
-//             this.radius = radius; //instance members
-//         };
 
-//         Circle.prototype.draw = function() {//prototype members
-//             console.log("draw");
-//         };
+    ///7. Iterating Instance and Prototype Members
+    (() => {
+        function Circle(radius) {
+            this.radius = radius;
+
+            this.move = function() {//we have two instance members here
+                console.log('move')
+            };
+        };
+        console.log(Circle.prototype);
+
+        const circle1 = new Circle(1);//declaring the object first and then modifying the prototype below
+        console.log(circle1);
+
+        Circle.prototype.draw = function draw() {//we have one prototype member here.
+            //it does not matter when you change the prototype. we could declare the new object first and then modify the prototype. The draw method will still be available
+            console.log('draw');
+            // return "draw";
+        };
+
+        circle1.draw();//the draw method will still be available;
         
-//         const circle1 = new Circle(1);
-//         console.log(circle1.toString());//chech the .toString of the circle object
+        console.log(Object.keys(circle1));//only returns instance members
+
+        for(let keys in circle1) {//returns all memebers (instance and prototype)
+            console.log(keys);
+        };
+
+        console.log(circle1.hasOwnProperty("radius"));//.hasOwnProperty is refering to the instance members. this returns true, because "radius" is an instance member
+        console.log(circle1.hasOwnProperty("draw"));//returns false because "draw" is a prototype property
         
-//         console.log(".toString:", Circle.prototype.toString());//check the .toString method of the parent object
-
-//         Circle.prototype.toString = function() {//assign a different vaule to the .toString method
-//             return `Circle with radius ${this.radius}`;
-//         };
-
-//         console.log(".toString:", Circle.prototype.toString());//after assignment
-//         console.log(circle1.toString());
-//     })();
-
-//     (() => {
-//         function Circle(radius) {
-//             this.radius = radius;
-
-//             this.move = function() {
-//                 console.log("move");
-//             };
-//         };
-
-//         Circle.prototype.draw = function draw() {
-//             console.log("draw");
-//             this.move();//this method is an instance memeber. We can reference in both directions. 
-//         };
-
-//         const circle1 = new Circle(1);
-//         circle1.draw();
-//     })();
-
-//     ///7. Iterating Instance and Prototype Members
-//     (() => {
-//         function Circle(radius) {
-//             this.radius = radius;
-
-//             this.move = function() {//we have two instance members here
-//                 console.log('move')
-//             };
-//         };
         
-//         const circle1 = new Circle(1);//declaring the object first and then modifying the prototype below
-//         console.log(circle1);
 
-//         Circle.prototype.draw = function draw() {//we have one prototype member here.
-//             //it does not matter when you change the prototype. we could declare the new object first and then modify the prototype. The draw method will still be available
-//             console.log('draw');
-//             // return "draw";
-//         };
 
-//         circle1.draw();//the draw method will still be available;
+    })();
         
-//         console.log(Object.keys(circle1));//only returns instance members
+    // (() => {
+    //     function StopWatch() {
+    //         let startTime, endTime, running, duration = 0;
 
-//         for(let keys in circle1) {//returns all memebers (instance and prototype)
-//             console.log(keys);
-//         };
+    //         //I want access to the variables that I declared above. I can not access them from the prototype functions below
+    //         Object.defineProperty(this, "duration", {
+    //             get: function() {
+    //                 return duration;
+    //             },
+    //             set: function (value) {
+    //                 duration = value;
+    //             }
+    //         });
 
-//         console.log(circle1.hasOwnProperty("radius"));//.hasOwnProperty is refering to the instance members. this returns true, because "radius" is an instance member
-//         console.log(circle1.hasOwnProperty("draw"));//returns false because "draw" is a prototype property
+    //         Object.defineProperty(this, 'startTime', {
+    //             get: function() {
+    //                 return startTime;
+    //             },
+    //             set: function (value) {
+    //                 startTime = value;
+    //             }
+    //         });
 
-//     })();
-        
-//     (() => {
-//         function StopWatch() {
-//             let startTime, endTime, running, duration = 0;
+    //         Object.defineProperty(this, "endTime",  {
+    //             get: function() {
+    //                 return endTime;
+    //             },
+    //             set: function (value) {
+    //                 endTime = value;
+    //             }
+    //         });
 
-//             //I want access to the variables that I declared above. I can not access them from the prototype functions below
-//             Object.defineProperty(this, "duration", {
-//                 get: function() {
-//                     return duration;
-//                 },
-//                 set: function (value) {
-//                     duration = value;
-//                 }
-//             });
-
-//             Object.defineProperty(this, 'startTime', {
-//                 get: function() {
-//                     return startTime;
-//                 },
-//                 set: function (value) {
-//                     startTime = value;
-//                 }
-//             });
-
-//             Object.defineProperty(this, "endTime",  {
-//                 get: function() {
-//                     return endTime;
-//                 },
-//                 set: function (value) {
-//                     endTime = value;
-//                 }
-//             });
-
-//             Object.defineProperty(this, "running", {
-//                 get: function() {
-//                     return running; 
-//                 },
-//                 set: function(value) {
-//                     running = value;
-//                 }
-//             });
-//         };
+    //         Object.defineProperty(this, "running", {
+    //             get: function() {
+    //                 return running; 
+    //             },
+    //             set: function(value) {
+    //                 running = value;
+    //             }
+    //         });
+    //     };
 
 //         StopWatch.prototype.start = function start () {
 //             if(this.running) throw new Error("StopWatch has already started");
